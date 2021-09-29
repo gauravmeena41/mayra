@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-// const authRoute = require("./routes/auth");
+const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 
 dotenv.config();
@@ -16,9 +16,9 @@ mongoose
   .catch((err) => console.log(err));
 
 // app.use(cors());
-// app.use(express.json());
-// app.use("/api/auth", authRoute);
-app.use("/api/user", userRoute);
+app.use(express.json());
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 app.listen(PORT || 7000, () => {
   console.log(`server is running ${PORT || 7000}`);
