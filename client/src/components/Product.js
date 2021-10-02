@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   FavoriteBorderOutlined,
   SearchOutlined,
@@ -61,7 +62,7 @@ const Icon = styled.div`
   transition: all 0.5s ease;
   cursor: pointer;
 
-  &::hover {
+  &:hover {
     background-color: #e9f5f5;
     transform: scale(1.1);
   }
@@ -77,7 +78,12 @@ const Product = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <SearchOutlined />
+          <Link
+            to={`/product/${item._id}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <SearchOutlined />
+          </Link>
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />
