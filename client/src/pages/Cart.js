@@ -1,5 +1,5 @@
 import { Add, Remove } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
@@ -7,6 +7,8 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../Responsive";
 import StripeCheckout from "react-stripe-checkout";
+import { userRequest } from "../requestMethods";
+import { useHistory } from "react-router";
 
 const Container = styled.div``;
 
@@ -158,11 +160,28 @@ const Button = styled.button`
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const KEY = process.env.REACT_APP_STRIPE;
-  const [stripeToke, setStripeToken] = useState(null);
+  const [stripeToken, setStripeToken] = useState(null);
+  const history = useHistory();
 
   const onToken = (token) => {
     setStripeToken(token);
   };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.total * 100,
+        });
+        history.push("/success", { data: res.data });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken, cart.total, history]);
+
   return (
     <Container>
       <Navbar />
