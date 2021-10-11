@@ -159,7 +159,8 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const KEY = process.env.REACT_APP_STRIPE;
+  const KEY =
+    "pk_test_51JfQYcSJzQhzE3tFmNgONrfu16Vqo1WTrDlbnv79UHgNAWtVVjT5iwi96rbOgUgzLsvWhNrzJxf6I6FiA7kqPLw000nxfRJsie";
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
 
@@ -172,7 +173,7 @@ const Cart = () => {
       try {
         const res = await userRequest.post("/checkout/payment", {
           tokenId: stripeToken.id,
-          amount: cart.total * 100,
+          amount: cart.total,
         });
         history.push("/success", { data: res.data });
       } catch (err) {
@@ -184,17 +185,28 @@ const Cart = () => {
 
   return (
     <Container>
-      <Navbar />
       <Announcement />
+      <Navbar />
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag({cart.quantity})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <StripeCheckout
+            name="Mayra"
+            image="https://avatars.githubusercontent.com/u/1486366?v=4"
+            billingAddress
+            shippingAddress
+            description={`Your total is ${cart.total}`}
+            amount={cart.total * 100}
+            token={onToken}
+            stripeKey={KEY}
+          >
+            <TopButton type="filled">CHECKOUT NOW</TopButton>
+          </StripeCheckout>
         </Top>
         <Bottom>
           <Info>
@@ -222,7 +234,7 @@ const Cart = () => {
                     <Remove />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    $ {product.price * product.quantity}
+                    &#8377; {product.price * product.quantity}
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -233,26 +245,26 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>&#8377; {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 4.9</SummaryItemPrice>
+              <SummaryItemPrice>&#8377; 40</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>- $ 4.9</SummaryItemPrice>
+              <SummaryItemPrice>- &#8377; 40</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>&#8377; {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <StripeCheckout
               name="Mayra"
-              image="xpz"
+              image="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
               billingAddress
               shippingAddress
-              description={`Your total is ${cart.total}`}
+              description={`Your total is ₹ ${cart.total}`}
               amount={cart.total * 100}
               token={onToken}
               stripeKey={KEY}

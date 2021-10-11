@@ -5,7 +5,6 @@ import {
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import styled from "styled-components";
-import { mobile } from "../Responsive";
 
 const Info = styled.div`
   opacity: 0;

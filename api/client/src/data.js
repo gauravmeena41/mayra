@@ -27,7 +27,7 @@ export const categories = [
     id: 1,
     img: "assets/images/shirtstylecat.png",
     title: "SHIRT STYLE!",
-    cat: "woman",
+    cat: "women",
   },
   {
     id: 2,

@@ -102,7 +102,7 @@ const Amount = styled.span`
   width: 30px;
   height: 30px;
   border-radius: 10px;
-  border: 1px solid teal;
+  border: 1px solid #f9c74f;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,13 +111,13 @@ const Amount = styled.span`
 
 const Button = styled.button`
   padding: 15px;
-  border: 2px solid teal;
+  border: 2px solid #f9c74f;
   background-color: #fff;
   cursor: pointer;
   font-weight: 500;
 
-  &:hover {
-    background-color: #f8f4f4;
+  &:active {
+    background-color: #f9c74f;
   }
 `;
 
@@ -155,8 +155,8 @@ const Product = () => {
   };
   return (
     <Container>
-      <Navbar />
       <Announcement />
+      <Navbar />
       <Wrapper>
         <ImageContainer>
           <Image src={product.img} />
@@ -164,7 +164,7 @@ const Product = () => {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
-          <Price>$ {product.price}</Price>
+          <Price>&#8377;{product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>

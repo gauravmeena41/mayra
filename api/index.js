@@ -9,6 +9,7 @@ const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const checkoutRoute = require("./routes/stripe");
+const path = require("path");
 
 dotenv.config();
 
@@ -27,6 +28,12 @@ app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", checkoutRoute);
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
 
 app.listen(PORT || 7000, () => {
   console.log(`server is running ${PORT || 7000}`);
